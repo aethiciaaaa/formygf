@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Game buat pacarku yang bokemmmm</title>
+    <title>Game buat pacarkuuu yang bokem</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
@@ -70,7 +70,7 @@
     </style>
 </head>
 <body>
-    <h1>Game buat pacarku yang bokem</h1>
+    <h1>Gamee buat pacarku yang bokem</h1>
     <button id="startButton" onclick="startGame()">Start Game</button>
     <canvas id="game" width="400" height="600"></canvas>
     <div id="lovePopup">
@@ -94,15 +94,6 @@
         var score;
         var gameStarted;
         var clouds;
-        var lastTouchEnd = 0;
-
-        document.addEventListener('touchend', function (event) {
-            var now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
 
         function resetGame() {
             bird = {
@@ -233,6 +224,11 @@
         canvas.addEventListener('click', function () {
             jumpBird();
         });
+
+        canvas.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            jumpBird();
+        }, { passive: false });
 
         resetGame();
         update();
