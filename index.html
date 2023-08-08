@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -17,11 +18,11 @@
             margin: 0;
             font-family: 'Indie Flower', cursive;
         }
-        
+
         h1 {
             font-size: 30px;
         }
-        
+
         canvas {
             border: 5px solid #000;
             display: none;
@@ -32,7 +33,7 @@
             -ms-user-select: none;
             user-select: none;
         }
-        
+
         #startButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -42,7 +43,7 @@
             border: none;
             border-radius: 5px;
         }
-        
+
         #lovePopup {
             display: none;
             position: absolute;
@@ -56,7 +57,7 @@
             font-size: 30px;
             padding-top: 200px;
         }
-        
+
         #closeButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -67,10 +68,46 @@
             border-radius: 5px;
             margin-top: 20px;
         }
+
+        #characterSelect {
+            display: block;
+            margin: 10px;
+        }
+
+        #characterSelect img {
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            margin: 5px;
+            border: 2px solid transparent;
+        }
+
+        #characterSelect img.selected {
+            border: 2px solid red;
+        }
+
+        #videoBackground {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
     </style>
 </head>
+
 <body>
+    <video id="videoBackground" autoplay muted loop>
+        <source src="https://od.lk/s/NDlfMzE2MTU3NzZf/traffy.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <h1>Gamee buat pacarku yang bokem</h1>
+    <div id="characterSelect">
+        <img src="https://od.lk/s/NDlfMzE2MTU3MjNf/k.jpg" onclick="selectCharacter('shark')" alt="shark">
+        <img src="https://od.lk/s/NDlfMzE2MTU3NDlf/k.PNG" onclick="selectCharacter('bokem')" alt="bokem">
+        <img src="https://od.lk/s/NDlfMzE2MTU3NTBf/lucu%20trupi.PNG" onclick="selectCharacter('truffy')" alt="truffy">
+    </div>
     <button id="startButton" onclick="startGame()">Start Game</button>
     <canvas id="game" width="400" height="600"></canvas>
     <div id="lovePopup">
@@ -88,12 +125,28 @@
         var startButton = document.getElementById('startButton');
         var lovePopup = document.getElementById('lovePopup');
         var backgroundMusic = document.getElementById('backgroundMusic');
-
+        var characterImages = {
+            'shark': 'https://od.lk/s/NDlfMzE2MTU3MjNf/k.jpg',
+            'bokem': 'https://od.lk/s/NDlfMzE2MTU3NDlf/k.PNG',
+            'truffy': 'https://od.lk/s/NDlfMzE2MTU3NTBf/lucu%20trupi.PNG'
+        };
+        var selectedCharacter = 'shark'; // Default character
         var bird;
         var pipes;
         var score;
         var gameStarted;
         var clouds;
+
+        function selectCharacter(character) {
+            var imgs = document.getElementById('characterSelect').getElementsByTagName('img');
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].classList.remove('selected');
+                if (imgs[i].alt === character) {
+                    imgs[i].classList.add('selected');
+                }
+            }
+            selectedCharacter = character;
+        }
 
         function resetGame() {
             bird = {
@@ -151,9 +204,9 @@
         }
 
         function drawBird() {
-            context.fillStyle = 'black';
-            context.font = '20px Arial';
-            context.fillText('bokem', bird.x, bird.y);
+            var img = new Image();
+            img.src = characterImages[selectedCharacter];
+            context.drawImage(img, bird.x, bird.y, 40, 40); // Adjust size as needed
         }
 
         function drawPipe(pipe) {
@@ -230,8 +283,12 @@
             jumpBird();
         }, { passive: false });
 
+        // Call the selectCharacter function with the default character
+        selectCharacter('shark');
+
         resetGame();
         update();
     </script>
 </body>
+
 </html>
