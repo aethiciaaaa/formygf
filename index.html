@@ -7,7 +7,6 @@
     <title>Game buat pacarkuuu yang bokem</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-
         body {
             background-color: #87CEEB;
             display: flex;
@@ -18,11 +17,9 @@
             margin: 0;
             font-family: 'Indie Flower', cursive;
         }
-
         h1 {
             font-size: 30px;
         }
-
         canvas {
             border: 5px solid #000;
             display: none;
@@ -33,7 +30,6 @@
             -ms-user-select: none;
             user-select: none;
         }
-
         #startButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -43,7 +39,6 @@
             border: none;
             border-radius: 5px;
         }
-
         #lovePopup {
             display: none;
             position: absolute;
@@ -57,7 +52,6 @@
             font-size: 30px;
             padding-top: 200px;
         }
-
         #closeButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -68,12 +62,10 @@
             border-radius: 5px;
             margin-top: 20px;
         }
-
         #characterSelect {
             display: block;
             margin: 10px;
         }
-
         #characterSelect img {
             width: 60px;
             height: 60px;
@@ -81,11 +73,9 @@
             margin: 5px;
             border: 2px solid transparent;
         }
-
         #characterSelect img.selected {
             border: 2px solid red;
         }
-
         #videoBackground {
             position: fixed;
             right: 0;
@@ -113,6 +103,7 @@
     <div id="lovePopup">
         I LOVE YOU RERE EVEN THOUGH KAMU BOKEM
         <br>
+        <div id="finalScore"></div>
         <button id="closeButton" onclick="closePopup()">Close</button>
     </div>
     <audio id="backgroundMusic" loop>
@@ -130,7 +121,7 @@
             'bokem': 'https://od.lk/s/NDlfMzE2MTU3NDlf/k.PNG',
             'truffy': 'https://od.lk/s/NDlfMzE2MTU3NTBf/lucu%20trupi.PNG'
         };
-        var selectedCharacter = 'shark'; // Default character
+        var selectedCharacter = 'shark';
         var bird;
         var pipes;
         var score;
@@ -149,22 +140,11 @@
         }
 
         function resetGame() {
-            bird = {
-                x: 50,
-                y: 300,
-                velocity: 0,
-                jump: -10
-            };
-
+            bird = { x: 50, y: 300, velocity: 0, jump: -10 };
             pipes = [];
             score = 0;
             gameStarted = false;
-
-            clouds = [
-                { x: 100, y: 50 },
-                { x: 250, y: 100 },
-                { x: 400, y: 150 }
-            ];
+            clouds = [ { x: 100, y: 50 }, { x: 250, y: 100 }, { x: 400, y: 150 } ];
         }
 
         function startGame() {
@@ -180,6 +160,7 @@
             lovePopup.style.display = 'block';
             canvas.style.display = 'none';
             backgroundMusic.pause();
+            document.getElementById('finalScore').innerText = 'Score kebokeman kamu adalah: ' + score;
         }
 
         function closePopup() {
@@ -206,13 +187,20 @@
         function drawBird() {
             var img = new Image();
             img.src = characterImages[selectedCharacter];
-            context.drawImage(img, bird.x, bird.y, 40, 40); // Adjust size as needed
+            context.drawImage(img, bird.x, bird.y, 40, 40);
         }
 
         function drawPipe(pipe) {
             context.fillStyle = 'green';
             context.fillRect(pipe.x, 0, 20, pipe.top);
             context.fillRect(pipe.x, pipe.bottom, 20, canvas.height - pipe.bottom);
+        }
+
+        function drawScore() {
+            context.fillStyle = 'black';
+            context.font = '30px Arial';
+            context.textAlign = 'right';
+            context.fillText('Score: ' + score, canvas.width - 10, 30);
         }
 
         function update() {
@@ -265,6 +253,7 @@
                 }
             }
 
+            drawScore();
             requestAnimationFrame(update);
         }
 
@@ -283,9 +272,7 @@
             jumpBird();
         }, { passive: false });
 
-        // Call the selectCharacter function with the default character
         selectCharacter('shark');
-
         resetGame();
         update();
     </script>
