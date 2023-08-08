@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Game buat pacarku yang bokem</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
@@ -17,13 +17,22 @@
             margin: 0;
             font-family: 'Indie Flower', cursive;
         }
+        
         h1 {
             font-size: 30px;
         }
+        
         canvas {
             border: 5px solid #000;
             display: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
+        
         #startButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -33,6 +42,7 @@
             border: none;
             border-radius: 5px;
         }
+        
         #lovePopup {
             display: none;
             position: absolute;
@@ -46,6 +56,7 @@
             font-size: 30px;
             padding-top: 200px;
         }
+        
         #closeButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -84,13 +95,15 @@
         var gameStarted;
         var clouds;
         var lastTouchEnd = 0;
+
         document.addEventListener('touchend', function (event) {
             var now = (new Date()).getTime();
             if (now - lastTouchEnd <= 300) {
                 event.preventDefault();
             }
             lastTouchEnd = now;
-        }, false);
+        }, { passive: false });
+
         function resetGame() {
             bird = {
                 x: 50,
@@ -118,7 +131,6 @@
             gameStarted = true;
             update();
         }
-        
 
         function gameOver() {
             lovePopup.style.display = 'block';
@@ -162,7 +174,6 @@
         function update() {
             context.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw clouds
             for (var i = 0; i < clouds.length; i++) {
                 drawCloud(clouds[i].x, clouds[i].y);
                 clouds[i].x -= 1;
@@ -189,8 +200,8 @@
             drawBird();
 
             if (pipes.length === 0 || pipes[pipes.length - 1].x <= canvas.width - 150) {
-                var top = Math.random() * (canvas.height - 300); // Shorter pipes
-                var bottom = top + 200; // Bigger gap
+                var top = Math.random() * (canvas.height - 300);
+                var bottom = top + 200;
                 pipes.push({ x: canvas.width, top: top, bottom: bottom });
             }
 
@@ -224,8 +235,7 @@
         });
 
         resetGame();
-        update(); // Call update to start the cloud animation on the start screen
-        
+        update();
     </script>
 </body>
 </html>
