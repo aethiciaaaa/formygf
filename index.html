@@ -1,176 +1,222 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Happy Birthday, Cala!</title>
-  <style>
-    body {
-      background: linear-gradient(135deg, #ff94b6, #ff6381);
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    
-    h1 {
-      color: #ffffff;
-      font-size: 36px;
-      margin-bottom: 20px;
-      animation: heartbeat 1s infinite;
-    }
-    
-    p {
-      color: #ffffff;
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-    
-    .birthday-image {
-      margin-bottom: 30px;
-      transition: transform 0.3s;
-    }
-    
-    .birthday-image:hover {
-      transform: scale(1.05);
-    }
-    
-    .birthday-wishes {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-    
-    .signature {
-      margin-top: 50px;
-      font-style: italic;
-      color: #ffffff;
-    }
-    
-    .footer {
-      margin-top: 50px;
-      font-size: 12px;
-      color: #ffffff;
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    .wish-button {
-      background-color: #ffffff;
-      color: #ff6381;
-      font-size: 16px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    
-    .calendar {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      margin-bottom: 20px;
-    }
-    
-    .calendar-date {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff6381;
-    }
-    
-    .calendar-month {
-      font-size: 18px;
-      color: #777777;
-    }
-    
-    .background-shape {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-    
-    .background-shape svg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game buat pacarku yang bokem</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+        body {
+            background-color: #87CEEB;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Indie Flower', cursive;
+        }
+        h1 {
+            font-size: 30px;
+        }
+        canvas {
+            border: 5px solid #000;
+            display: none;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #lovePopup {
+            display: none;
+            position: absolute;
+            background-color: pink;
+            color: red;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            text-align: center;
+            font-size: 30px;
+            padding-top: 200px;
+        }
+        #closeButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Happy Birthday, Cala!</h1>
-  <div class="background-shape">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-      <path fill="#ffffff" d="M0,600s100,0,100-100V0H0V600z" opacity="0.15"></path>
-      <path fill="#ffffff" d="M300,600s100,0,100-100V0H300V600z" opacity="0.1"></path>
-      <path fill="#ffffff" d="M600,600s100,0,100-100V0H600V600z" opacity="0.05"></path>
-    </svg>
-  </div>
-  <img src="https://pbs.twimg.com/profile_images/1656317198963712002/v8JGy_IA_400x400.jpg" class="birthday-image" alt="Birthday Image">
-  <p class="birthday-wishes">Dear Cala,</p>
-  <p>On this special day, I wanted to take a moment to wish you the happiest of birthdays! You are an amazing friend, and I'm grateful to have you in my life.</p>
-  <p>May this year bring you countless joy, love, and incredible experiences. I hope all your dreams and aspirations come true. Enjoy your day to the fullest!</p>
-  <p>Once again, happy birthday, Cala!</p>
-  <p class="signature">With warmest wishes,</p>
-  <p class="signature">Godfrey</p>
-  
-  <div class="calendar">
-    <p class="calendar-date">20</p>
-    <p class="calendar-month">May 2023</p>
-  </div>
-  
-  <button class="wish-button" onclick="showWish()">Click here, Cala</button>
-  
-  <p id="wishText" class="hidden">I wish you success in all your academic and social endeavors. May you excel in everything you set your mind to and make lifelong memories with friends and loved ones. Happy birthday, Cala!</p>
-  
-  <div class="bordered">
-    <h2>Love Game</h2>
-    <p>Play this fun love-themed game to celebrate your special day <3</p>
-    
-    <div id="game-container">
-      <p id="score">Score: 0</p>
-      <button onclick="increaseScore()">Click buat tau rahasia baru.</button>
+    <h1>Game buat pacarku yang bokem</h1>
+    <button id="startButton" onclick="startGame()">Start Game</button>
+    <canvas id="game" width="400" height="600"></canvas>
+    <div id="lovePopup">
+        I LOVE YOU RERE EVEN THOUGH KAMU BOKEM
+        <br>
+        <button id="closeButton" onclick="closePopup()">Close</button>
     </div>
-  </div>
-  
-  <div class="footer">
-    <p>Happy birthday ya cewek lucu! <3</p>
-  </div>
-  
-  <script>
-    /* JavaScript code for the game */
-    let score = 0;
-    
-    function increaseScore() {
-      score++;
-      document.getElementById("score").textContent = "Score: " + score;
-      
-      if (score === 10) {
-        showPopup();
-      }
-    }
-    
-    function showPopup() {
-      alert("BE THE BEST VERSION OF YOURSELF THIS YEAR, OKAY?");
-    }
-    
-    function showWish() {
-      var wishText = document.getElementById("wishText");
-      wishText.classList.remove("hidden");
-    }
-  </script>
-  <script>
-  
-  
-    function showWish() {
-      var wishText = document.getElementById("wishText");
-      wishText.classList.remove("hidden");
-    }
-  </script>
+    <audio id="backgroundMusic" loop>
+        <source src="https://example.com/your-background-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        var canvas = document.getElementById('game');
+        var context = canvas.getContext('2d');
+        var startButton = document.getElementById('startButton');
+        var lovePopup = document.getElementById('lovePopup');
+        var backgroundMusic = document.getElementById('backgroundMusic');
+
+        var bird;
+        var pipes;
+        var score;
+        var gameStarted;
+        var clouds;
+
+        function resetGame() {
+            bird = {
+                x: 50,
+                y: 300,
+                velocity: 0,
+                jump: -10
+            };
+
+            pipes = [];
+            score = 0;
+            gameStarted = false;
+
+            clouds = [
+                { x: 100, y: 50 },
+                { x: 250, y: 100 },
+                { x: 400, y: 150 }
+            ];
+        }
+
+        function startGame() {
+            resetGame();
+            startButton.style.display = 'none';
+            canvas.style.display = 'block';
+            backgroundMusic.play();
+            gameStarted = true;
+            update();
+        }
+
+        function gameOver() {
+            lovePopup.style.display = 'block';
+            canvas.style.display = 'none';
+            backgroundMusic.pause();
+        }
+
+        function closePopup() {
+            lovePopup.style.display = 'none';
+            startButton.style.display = 'block';
+            backgroundMusic.pause();
+            resetGame();
+        }
+
+        function jumpBird() {
+            bird.velocity = bird.jump;
+        }
+
+        function drawCloud(x, y) {
+            context.beginPath();
+            context.arc(x, y, 20, 0, Math.PI * 2, true);
+            context.arc(x + 40, y, 20, 0, Math.PI * 2, true);
+            context.arc(x + 20, y - 20, 30, 0, Math.PI * 2, true);
+            context.closePath();
+            context.fillStyle = 'white';
+            context.fill();
+        }
+
+        function drawBird() {
+            context.fillStyle = 'black';
+            context.font = '20px Arial';
+            context.fillText('bokem', bird.x, bird.y);
+        }
+
+        function drawPipe(pipe) {
+            context.fillStyle = 'green';
+            context.fillRect(pipe.x, 0, 20, pipe.top);
+            context.fillRect(pipe.x, pipe.bottom, 20, canvas.height - pipe.bottom);
+        }
+
+        function update() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw clouds
+            for (var i = 0; i < clouds.length; i++) {
+                drawCloud(clouds[i].x, clouds[i].y);
+                clouds[i].x -= 1;
+                if (clouds[i].x < -60) {
+                    clouds[i].x = canvas.width;
+                }
+            }
+
+            if (!gameStarted) return;
+
+            bird.velocity += 1;
+            bird.y += bird.velocity;
+
+            if (bird.y > canvas.height - 20) {
+                bird.y = canvas.height - 20;
+                bird.velocity = 0;
+            }
+
+            if (bird.y < 0) {
+                bird.y = 0;
+                bird.velocity = 0;
+            }
+
+            drawBird();
+
+            if (pipes.length === 0 || pipes[pipes.length - 1].x <= canvas.width - 150) {
+                var top = Math.random() * (canvas.height - 300); // Shorter pipes
+                var bottom = top + 200; // Bigger gap
+                pipes.push({ x: canvas.width, top: top, bottom: bottom });
+            }
+
+            for (var i = pipes.length - 1; i >= 0; i--) {
+                pipes[i].x -= 2;
+                drawPipe(pipes[i]);
+
+                if (pipes[i].x < bird.x && pipes[i].x + 20 > bird.x &&
+                    (bird.y < pipes[i].top || bird.y + 20 > pipes[i].bottom)) {
+                    gameOver();
+                    return;
+                }
+
+                if (pipes[i].x < 0) {
+                    pipes.splice(i, 1);
+                    score++;
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        window.addEventListener('keydown', function (e) {
+            if (e.key === ' ') {
+                jumpBird();
+            }
+        });
+
+        canvas.addEventListener('click', function () {
+            jumpBird();
+        });
+
+        resetGame();
+        update(); // Call update to start the cloud animation on the start screen
+    </script>
 </body>
 </html>
