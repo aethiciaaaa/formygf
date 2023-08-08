@@ -7,6 +7,7 @@
     <title>Game buat pacarkuuu yang bokem</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
         body {
             background-color: #87CEEB;
             display: flex;
@@ -17,28 +18,20 @@
             margin: 0;
             font-family: 'Indie Flower', cursive;
         }
+
+        @keyframes wavy {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(-5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
         h1 {
             font-size: 30px;
+            animation: wavy 1s infinite;
         }
-        canvas {
-            border: 5px solid #000;
-            display: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-        #startButton {
-            padding: 10px 20px;
-            font-size: 20px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
+
         #lovePopup {
             display: none;
             position: absolute;
@@ -51,7 +44,30 @@
             text-align: center;
             font-size: 30px;
             padding-top: 200px;
+            animation: wavy 2s infinite;
         }
+
+        canvas {
+            border: 5px solid #000;
+            display: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #startButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
         #closeButton {
             padding: 10px 20px;
             font-size: 20px;
@@ -62,10 +78,12 @@
             border-radius: 5px;
             margin-top: 20px;
         }
+
         #characterSelect {
             display: block;
             margin: 10px;
         }
+
         #characterSelect img {
             width: 60px;
             height: 60px;
@@ -73,9 +91,11 @@
             margin: 5px;
             border: 2px solid transparent;
         }
+
         #characterSelect img.selected {
             border: 2px solid red;
         }
+
         #videoBackground {
             position: fixed;
             right: 0;
@@ -97,13 +117,14 @@
         <img src="https://od.lk/s/NDlfMzE2MTU3MjNf/k.jpg" onclick="selectCharacter('shark')" alt="shark">
         <img src="https://od.lk/s/NDlfMzE2MTU3NDlf/k.PNG" onclick="selectCharacter('bokem')" alt="bokem">
         <img src="https://od.lk/s/NDlfMzE2MTU3NTBf/lucu%20trupi.PNG" onclick="selectCharacter('truffy')" alt="truffy">
+        <img src="https://od.lk/s/NDlfMzE2MTYxMjhf/barney.PNG" onclick="selectCharacter('barney')" alt="barney">
     </div>
     <button id="startButton" onclick="startGame()">Start Game</button>
     <canvas id="game" width="400" height="600"></canvas>
     <div id="lovePopup">
         I LOVE YOU RERE EVEN THOUGH KAMU BOKEM
         <br>
-        <div id="finalScore"></div>
+        Score kebokeman kamu adalah: <span id="finalScore">0</span>
         <button id="closeButton" onclick="closePopup()">Close</button>
     </div>
     <audio id="backgroundMusic" loop>
@@ -119,7 +140,8 @@
         var characterImages = {
             'shark': 'https://od.lk/s/NDlfMzE2MTU3MjNf/k.jpg',
             'bokem': 'https://od.lk/s/NDlfMzE2MTU3NDlf/k.PNG',
-            'truffy': 'https://od.lk/s/NDlfMzE2MTU3NTBf/lucu%20trupi.PNG'
+            'truffy': 'https://od.lk/s/NDlfMzE2MTU3NTBf/lucu%20trupi.PNG',
+            'barney': 'https://od.lk/s/NDlfMzE2MTYxMjhf/barney.PNG'
         };
         var selectedCharacter = 'shark';
         var bird;
@@ -160,7 +182,7 @@
             lovePopup.style.display = 'block';
             canvas.style.display = 'none';
             backgroundMusic.pause();
-            document.getElementById('finalScore').innerText = 'Score kebokeman kamu adalah: ' + score;
+            document.getElementById('finalScore').innerText = score;
         }
 
         function closePopup() {
