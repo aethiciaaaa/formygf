@@ -68,7 +68,7 @@
         <button id="closeButton" onclick="closePopup()">Close</button>
     </div>
     <audio id="backgroundMusic" loop>
-        <source src="https://example.com/your-background-music.mp3" type="audio/mpeg">
+        <source src="https://od.lk/s/NDlfMzE2MTM0NzNf/SHOUT%20OUT.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <script>
@@ -83,7 +83,14 @@
         var score;
         var gameStarted;
         var clouds;
-
+        var lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            var now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
         function resetGame() {
             bird = {
                 x: 50,
@@ -111,6 +118,7 @@
             gameStarted = true;
             update();
         }
+        
 
         function gameOver() {
             lovePopup.style.display = 'block';
@@ -217,6 +225,7 @@
 
         resetGame();
         update(); // Call update to start the cloud animation on the start screen
+        
     </script>
 </body>
 </html>
